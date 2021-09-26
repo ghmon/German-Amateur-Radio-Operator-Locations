@@ -34,7 +34,7 @@ Usage: java - jar pdfbox.jar ExtractText <input.pdf> <output.txt>
 
 Ugly, i know: change file name in file "geocode2.py" (around line 50):
 
-=> file = open(<name of text file here)
+=> file = open(<name of text file here>)
 
 and then start "geocode.py"
 
