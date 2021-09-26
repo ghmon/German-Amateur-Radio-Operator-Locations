@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+#
+# Imports
+#
+
 import os
 import re
 import time
@@ -21,6 +25,10 @@ from geopy.exc import GeocoderUnavailable
 # from geopy.geocoders import GeocodeEarth
 # from geopy.geocoders import GoogleV3
 
+#
+# Setup logging
+#
+
 logger = logging.getLogger('Debug logger')
 logger.setLevel(logging.INFO)
 
@@ -32,6 +40,10 @@ formatter = logging.Formatter( '%(levelname)s - %(message)s' )
 # add formatter to ch
 ch.setFormatter(formatter)
 logger.addHandler(ch)
+
+#
+# Setup crash recovery
+#
 
 # Read number of *seen* records on last exit. If the program crashes or
 # is terminated otherwise you have not to geocode all addresses
@@ -51,11 +63,18 @@ numSeenRecords = int(records_seen.read())
 
 logger.debug( "#SR: seen records: " + str(numSeenRecords) )
 
+#
+# Create output file
+#
+
 rufzeichen = open( "rufzeichen.csv", "a+")
 if numSeenRecords == 0:
     rufzeichen.write( 'lon, lat, callsign, class, name, address' + '\n' )
 
-# Read raw data file converted from pdf
+#
+# Read and preprocess input file
+#
+
 file = open('2021-08-02-Amateurfunk-Funkamateure-Rufzeichenliste_AFU-CallSigns-Bundesnetzagentur.txt', 'r')
 lines = re.split( r'\n', file.read() )
 file.close()
@@ -73,6 +92,11 @@ callsigns_alldata = re.split( callsigns, data )
 
 it = iter( callsigns_alldata )
 next(it) # skip empty entry (?)
+
+#
+# Start work from last position when exited
+# (crash recovery)
+#
 
 # skip already processed numSeenRecords records
 for i in range(2*(numSeenRecords+1)):
