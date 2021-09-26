@@ -6,9 +6,8 @@ import re
 import time
 import logging
 
-# Usage policy Nominatim
+# Usage policy Nominatim: maximum of 1 request per second
 # <https://operations.osmfoundation.org/policies/nominatim>
-# maximum of 1 request per second
 from geopy.geocoders import Nominatim
 
 from geopy.exc import GeocoderTimedOut
@@ -34,7 +33,13 @@ formatter = logging.Formatter( '%(levelname)s - %(message)s' )
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-# numSeenRecords: all records including those who where skipped
+# Read number of *seen* records on last exit. If the program crashes or
+# is terminated otherwise you have not to geocode all addresses
+# again. If you want to start from the beginning delete file
+# "rufzeichen-seen.txt".
+
+# numSeenRecords: all records including those who where skipped cause
+# no addresses given.
 if os.path.isfile("rufzeichen-seen.txt"):
     records_seen = open( "rufzeichen-seen.txt", "r+" )
 else:
@@ -50,6 +55,7 @@ rufzeichen = open( "rufzeichen.csv", "a+")
 if numSeenRecords == 0:
     rufzeichen.write( 'lon, lat, callsign, class, name, address' + '\n' )
 
+# Read raw data file converted from pdf
 file = open('2021-08-02-Amateurfunk-Funkamateure-Rufzeichenliste_AFU-CallSigns-Bundesnetzagentur.txt', 'r')
 lines = re.split( r'\n', file.read() )
 file.close()
@@ -84,7 +90,7 @@ for callsign in it:
 
     if not re.search( r";", personal_data ):
         # skip record, no addresses
-        numSeenRecords = numSeenRecords + 1
+        numSeenRecords += 1
         records_seen.seek( 0, 0 )
         records_seen.write( str(numSeenRecords) )
         records_seen.flush()
@@ -108,10 +114,9 @@ for callsign in it:
 
     for address in addresses:
 
-        # retry management: with geopys class "RateLimiter"?
-        retry = 3
+        retries = 3
         
-        while retry > 0:
+        while retries > 0:
 
             try:
                 location = locator.geocode( address, timeout=10 )
@@ -123,21 +128,21 @@ for callsign in it:
                                 callsign, csclass, csname, address.strip() )
                     rufzeichen.write( record )
                     logger.debug( "#CSV-Written: " + record )
-                    # logger.debug( "#Locator-Address: " + str(location.address) )
-                    # logger.debug( "#Locator-Raw: " +str(location.raw) )
+                    # location.address, location.raw
 
-                retry = 0
+                retries = 0
                 
             except ( GeocoderTimedOut,
                      GeocoderUnavailable,
                      GeocoderServiceError ) as e:
                 print( "Error: " + str(e) )
-                retry = retry - 1
+                retries = retries - 1
 
+        # Usage policy Nominatim: maximum of 1 request per second
         time.sleep(1)
 
-    numSeenRecords = numSeenRecords + 1
-    numProcessedRecords = numProcessedRecords + 1
+    numSeenRecords += 1
+    numProcessedRecords += 1
 
     records_seen.seek( 0, 0 )
     records_seen.write( str(numSeenRecords) )
