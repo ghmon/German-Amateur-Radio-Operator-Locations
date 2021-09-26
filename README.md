@@ -3,6 +3,7 @@
 Convert adresses of amateur radio operators from the Bundesnetzagentur to geocoded file with latitude/longitude
 =====================
 
+<<<<<<< HEAD
 Requirements: java jre, python3, python module geopy
 
 => pip3 install geopy
@@ -13,6 +14,12 @@ The project is inspired by
 [CallmapGermany](https://github.com/df8oe/CallmapGermany) from Ulrich
 Thiel.
 
+=======
+Requirements: java jre, python3
+
+Tested on Ubuntu 18.04 LTS.
+
+>>>>>>> a15925a27b81f8bea1e0beb51ff357d04a6bff2a
 * Download PDF with adresses of amateur radio operators from the Bundesnetzagentur
 
 ["Verzeichnis der zugeteilten deutschen Amateurfunkrufzeichen und ihrer Inhaber (Rufzeichenliste)"](https://www.bundesnetzagentur.de/SharedDocs/Downloads/DE/Sachgebiete/Telekommunikation/Unternehmen_Institutionen/Frequenzen/Amateurfunk/Rufzeichenliste/Rufzeichenliste_AFU.html)
@@ -45,9 +52,23 @@ three retries, network connection down - on the next start the program
 resumes geocoding beginning at the last position, so that not all work
 done so far is lost.
 
+<<<<<<< HEAD
 * Import data
 
 in e.g. Google Earth by direct import (see under file menu) or import
 as csv delimited data into a GIS program - QGis is GREAT. The layer
 can be exported a KML file, which can be imported into Google Earth or
 Google Maps.
+=======
+Geocoded data for 2021-08-02 are checked in.
+
+* Import data in e.g. Google Earth
+
+- direct import
+
+OR
+
+- import as delimited data into a QGis (great GIS program) layer, and
+  export that layer to a KML file, which can be imported in Google
+  Earth.
+>>>>>>> a15925a27b81f8bea1e0beb51ff357d04a6bff2a
