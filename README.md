@@ -3,9 +3,15 @@
 Convert adresses of amateur radio operators from the Bundesnetzagentur to geocoded file with latitude/longitude
 =====================
 
-Requirements: java jre, python3
+Requirements: java jre, python3, python module geopy
+
+=> pip3 install geopy
 
 Tested on Ubuntu 18.04 LTS.
+
+The project is inspired by
+[CallmapGermany](https://github.com/df8oe/CallmapGermany) from Ulrich
+Thiel.
 
 * Download PDF with adresses of amateur radio operators from the Bundesnetzagentur
 
@@ -39,14 +45,9 @@ three retries, network connection down - on the next start the program
 resumes geocoding beginning at the last position, so that not all work
 done so far is lost.
 
-Geocoded data for 2021-08-02 are checked in.
+* Import data
 
-* Import data in e.g. Google Earth
-
-- direct import
-
-OR
-
-- import as delimited data into a QGis (great GIS program) layer, and
-  export that layer to a KML file, which can be imported in Google
-  Earth.
+in e.g. Google Earth by direct import (see under file menu) or import
+as csv delimited data into a GIS program - QGis is GREAT. The layer
+can be exported a KML file, which can be imported into Google Earth or
+Google Maps.
