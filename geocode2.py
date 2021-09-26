@@ -6,6 +6,22 @@ import re
 import time
 import logging
 
+# Usage policy Nominatim
+# <https://operations.osmfoundation.org/policies/nominatim>
+# maximum of 1 request per second
+from geopy.geocoders import Nominatim
+
+from geopy.exc import GeocoderTimedOut
+from geopy.exc import GeocoderServiceError
+from geopy.exc import GeocoderUnavailable
+
+# - all following locators need API keys
+# from geopy.geocoders import TomTom
+# from geopy.geocoders import Bing
+# from geopy.geocoders import Baidu
+# from geopy.geocoders import GeocodeEarth
+# from geopy.geocoders import GoogleV3
+
 logger = logging.getLogger('Debug logger')
 logger.setLevel(logging.INFO)
 
@@ -17,21 +33,6 @@ formatter = logging.Formatter( '%(levelname)s - %(message)s' )
 # add formatter to ch
 ch.setFormatter(formatter)
 logger.addHandler(ch)
-
-# Usage policy Nominatim
-# <https://operations.osmfoundation.org/policies/nominatim>
-# maximum of 1 request per second
-from geopy.geocoders import Nominatim
-from geopy.exc import GeocoderTimedOut
-from geopy.exc import GeocoderServiceError
-from geopy.exc import GeocoderUnavailable
-
-# - all following locators need API keys
-# from geopy.geocoders import TomTom
-# from geopy.geocoders import Bing
-# from geopy.geocoders import Baidu
-# from geopy.geocoders import GeocodeEarth
-# from geopy.geocoders import GoogleV3
 
 # numSeenRecords: all records including those who where skipped
 if os.path.isfile("rufzeichen-seen.txt"):
@@ -107,6 +108,7 @@ for callsign in it:
 
     for address in addresses:
 
+        # retry management: with geopys class "RateLimiter"?
         retry = 3
         
         while retry > 0:
@@ -126,16 +128,10 @@ for callsign in it:
 
                 retry = 0
                 
-            except GeocoderTimedOut as e:
-                print("Error: geocoder timeout: " + e.message)
-                retry = retry - 1
-
-            except GeocoderServiceError as e:
-                print("Error: geocoder service error: " + e.message)
-                retry = retry - 1
-
-            except GeocoderUnavailable as e:
-                print("Error: geocoder unavailable: " + e.message)
+            except ( GeocoderTimedOut,
+                     GeocoderUnavailable,
+                     GeocoderServiceError ) as e:
+                print( "Error: " + str(e) )
                 retry = retry - 1
 
         time.sleep(1)
