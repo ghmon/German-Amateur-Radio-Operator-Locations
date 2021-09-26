@@ -47,7 +47,7 @@ logger.debug( "#SR: seen records: " + str(numSeenRecords) )
 
 rufzeichen = open( "rufzeichen.csv", "a+")
 if numSeenRecords == 0:
-    rufzeichen.write( 'lon, lat, description' + '\n' )
+    rufzeichen.write( 'lon, lat, callsign, class, name, address' + '\n' )
 
 file = open('2021-08-02-Amateurfunk-Funkamateure-Rufzeichenliste_AFU-CallSigns-Bundesnetzagentur.txt', 'r')
 
@@ -116,10 +116,10 @@ for callsign in it:
                 location = locator.geocode( address, timeout=10 )
                 
                 if location:
-                    record = "{}, {}, {};{};{}\n".\
+                    record = "{}, {}, {}, {}, {}, {}\n".\
                         format( location.longitude,
                                 location.latitude,
-                                csclass, csname, address.strip() )
+                                callsign, csclass, csname, address.strip() )
                     rufzeichen.write( record )
                     logger.debug( "#CSV-Written: " + record )
                     # logger.debug( "#Locator-Address: " + str(location.address) )
