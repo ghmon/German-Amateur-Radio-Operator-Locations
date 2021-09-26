@@ -1,6 +1,6 @@
 # German-Amateur-Radio-Operator-Locations
 
-Convert addresses of amateur radio operators from the Bundesnetzagentur to geocoded file with latitude/longitude
+Convert amateur radio operator addresses from the Bundesnetzagentur to geocoded file with latitude/longitude position
 =====================
 
 Requirements:
