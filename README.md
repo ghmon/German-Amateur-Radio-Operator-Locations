@@ -5,8 +5,8 @@ Convert amateur radio operator addresses from the Bundesnetzagentur to geocoded 
 
 Requirements:
 
-- Java JRE
-- Python3
+- Java JRE (used: openjdk 11.0.11 2021-04-20)
+- Python3 (used: Python 3.6.9)
 - Python module "geopy": pip3 install geopy
 
 Tested on Ubuntu 18.04 LTS.
