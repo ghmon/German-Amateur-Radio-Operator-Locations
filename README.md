@@ -38,6 +38,12 @@ Ugly, i know: change file name in file "geocode2.py" (around line 50):
 
 and then start "geocode.py"
 
+Output is written to CSV file "rufzeichen.csv". It includes
+comma-separated values of longitude, latitude, and in the semicolon
+separated description: call sign, amateur radio class, name of operator,
+address. If there are multiple addresses for an operatir, there is one
+line for each address.
+
 "Nominatim" is the name of openstreetmaps locator service. Cause it allows
 max. one request per second, conversion needs ca. 77000 seconds, so
 roughly 22 hours.
@@ -45,7 +51,9 @@ roughly 22 hours.
 If the program crashes for some reason - e.g. locator not available on
 three retries, network connection down - on the next start the program
 resumes geocoding beginning at the last position, so that not all work
-done so far is lost.
+done so far is lost. The file rufzeichen-seen.txt contains always the
+last seen operator by the program. You must delete it after complete
+conversion to start a new conversion.
 
 * Import data
 
