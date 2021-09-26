@@ -11,6 +11,15 @@ Requirements:
 
 Tested on Ubuntu 18.04 LTS.
 
+Limitations:
+
+* not all addresses are found by the locator
+
+* not all entries (a few) in the source file from the
+  Bundesnetzagentur have addresses
+
+So currently you get 64645 address locations of 71024 call signs.
+
 The project is inspired by
 [CallmapGermany](https://github.com/df8oe/CallmapGermany) from Ulrich
 Thiel, but uses no code from there.
