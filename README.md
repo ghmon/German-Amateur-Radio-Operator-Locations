@@ -39,9 +39,9 @@ Ugly, i know: change file name in file "geocode2.py" (around line 50):
 and then start "geocode.py"
 
 Output is written to CSV file "rufzeichen.csv". It includes
-comma-separated values of longitude, latitude, and in the semicolon
-separated description: call sign, amateur radio class, name of operator,
-address. If there are multiple addresses for an operatir, there is one
+comma-separated values of longitude, latitude, call sign, amateur
+radio class, name of operator, and address (semicolon separated
+parts). If there are multiple addresses for an operator, there is one
 line for each address.
 
 "Nominatim" is the name of openstreetmaps locator service. Cause it allows
