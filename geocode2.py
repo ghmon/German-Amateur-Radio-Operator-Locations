@@ -50,18 +50,17 @@ if numSeenRecords == 0:
     rufzeichen.write( 'lon, lat, callsign, class, name, address' + '\n' )
 
 file = open('2021-08-02-Amateurfunk-Funkamateure-Rufzeichenliste_AFU-CallSigns-Bundesnetzagentur.txt', 'r')
-
-# Parentized part in split expression record in splitted records
-callsigns = re.compile( r'(D[A-Z0-9]+),' )
-
-# remove all empty lines and "Seite xxx"
 lines = re.split( r'\n', file.read() )
+file.close()
 
 data = ""
 for line in lines:
+    # remove all empty lines and "Seite xxx"
     if not re.match( r" +$|^Seite", line ):
         data = data + line
 
+# Parentized part in split expression is in splitted records
+callsigns = re.compile( r'(D[A-Z0-9]+),' )
 # split on callsigns
 callsigns_alldata = re.split( callsigns, data )
 
