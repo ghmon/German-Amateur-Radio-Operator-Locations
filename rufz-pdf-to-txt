@@ -1,0 +1,6 @@
+
+#   -startPage=8 -endPage=10 \
+
+/home/cconrad/bin/pdfbox export:text \
+   --input=2024-05-01-Amateurfunk-Funkamateure-Rufzeichenliste_AFU-CallSigns-Bundesnetzagentur.pdf \
+   --output=2024-05-01-Amateurfunk-Funkamateure-Rufzeichenliste_AFU-CallSigns-Bundesnetzagentur.txt
