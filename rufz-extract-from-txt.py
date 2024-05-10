@@ -4,7 +4,9 @@ import sys
 import re
 
 script, file = sys.argv
-text = "".join([l.strip('\n\r') for l in open(file, "r").readlines()])
+text = [l.strip('\n\r') for l in open(file, "r").readlines()]
+text = [string if not string.startswith("Seite ") else "" for string in text]
+text = "".join(text)
 
 pattern = re.compile(r"(D[A-Z0-9]{4,5})," +      # call sign
                      r"(.*?)" +                # non-greedy all chars until
