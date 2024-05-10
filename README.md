@@ -19,7 +19,7 @@ Limitations:
 * not all entries (a few) in the source file from the
   Bundesnetzagentur have addresses
 
-So currently you get 60000+ address locations of 69000+ call signs.
+So currently you get 60000+ address locations out of 69000+ call signs.
 
 The project is inspired by
 [CallmapGermany](https://github.com/df8oe/CallmapGermany) from Ulrich
@@ -38,7 +38,7 @@ e.g. [PDFBox v3.0.2 (stable)](https://www.apache.org/dyn/closer.lua/pdfbox/3.0.2
 
 * Extract text from PDF file
 
-Usage: /home/cconrad/bin/pdfbox export:text <input.pdf> <output.txt>
+Usage: java -jar pdfbox-app-3.0.2.jar export:text <input.pdf> <output.txt>
 
 * Geocode all addresses and write them to a CSV file
 
