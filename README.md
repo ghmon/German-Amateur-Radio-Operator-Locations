@@ -42,7 +42,7 @@ Usage: java -jar pdfbox-app-3.0.2.jar export:text --input=<input.pdf> --output=<
 
 * Extract operator data (call sign, operator class, name, address)
 
-Call ./rufz-extract-from-txt.py <raw-text-file> > <operator-csv-file>
+Call ./rufz-extract-from-txt.py <raw-text-file> \> \<operator-csv-file\>
 
 * Geocode all addresses and write them to a CSV file
 
