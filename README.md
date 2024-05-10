@@ -36,15 +36,19 @@ Thiel, but uses no code from there.
 Under "Command line tools", "PDFBox standalone", download jar file.
 e.g. [PDFBox v3.0.2 (stable)](https://www.apache.org/dyn/closer.lua/pdfbox/3.0.2/pdfbox-app-3.0.2.jar)
 
-* Extract text from PDF file
+* Extract raw text from PDF file
 
-Usage: java -jar pdfbox-app-3.0.2.jar export:text <input.pdf> <output.txt>
+Usage: java -jar pdfbox-app-3.0.2.jar export:text --input=<input.pdf> --output=<output.txt>
+
+* Extract operator data (call sign, operator class, name, address)
+
+Call ./rufz-extract-from-txt.py <raw-text-file> > <operator-csv-file>
 
 * Geocode all addresses and write them to a CSV file
 
 Ugly, i know: change txt file name in file "rufz-geocode.py" (around line 82):
 
-=> file = open(\<name of text file here\>)
+=> file = open(\<path <operator-csv-file>\>)
 
 and then start "rufz-geocode.py"
 
@@ -55,8 +59,8 @@ parts). (obsolete: If there are multiple addresses for an operator, there is one
 line for each address)
 
 "Nominatim" is the name of openstreetmaps locator service. Cause it allows
-max. one request per second, conversion needs ca. 77000 seconds, so
-roughly 22 hours.
+max. one request per second, conversion needs at least 60000 seconds, so
+roughly 17 hours.
 
 If the geocoding program crashes for some reason - e.g. locator not
 available on three retries, network connection down - on the next
