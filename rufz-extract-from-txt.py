@@ -15,13 +15,14 @@ pattern = re.compile(r"(D[A-Z0-9]{4,5})," +      # call sign
 
 print("callsign,class,name,street,town")
 
+# call sign, class, name{; street; town{, street; town}}
 matches = re.findall(pattern, text)
 
 for match in matches:
     # call sign
     print(f"{match[0]},", end="")
 
-    # class, name, address
+    # class, name{; street; town{, street; town}}
     # cleanup
     desc = match[1].strip().replace("\n", " ").replace("\r", " ")
     desc = desc.split(", ")
