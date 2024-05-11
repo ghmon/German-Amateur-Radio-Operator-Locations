@@ -94,7 +94,8 @@ for num in range(numSeenRecords+1, len(records)):
     
     logger.debug( "#CS: " + recs[0] )
 
-    print(recs)
+    # print(recs)
+
     if recs[3] == "n/a" and recs[4] == "n/a":
         logger.debug( f"skip record {num}" )
         # skip record, no addresses
@@ -106,7 +107,7 @@ for num in range(numSeenRecords+1, len(records)):
 
     # split anew addresses only cause ";" separated also class + name
     # from addresses.
-    address = recs[4] if recs[4] else recs[3]
+    address = recs[4] if recs[4] != "n/a" else recs[3]
 
     retries = 3
     while retries > 0:
