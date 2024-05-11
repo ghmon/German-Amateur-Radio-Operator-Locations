@@ -12,10 +12,12 @@ text = text.replace(", ", ",").replace("; ", ";")
 # call sign
 startP = "D[A-Z0-9]{4,5}"
 # class, name{[,;] street; town{, street; town}}
-midP = r"(([AE])[,;]?(.*?)([,;].*?)?)"
+midP = (r"(?P<class>[AE])[,;]?" +
+        "(?P<name>.*?)" +
+        "(?P<addr>[,;].*?)?")
 #midP = r"(.*?)"
 pattern = re.compile(
-    r"(" + startP + ")," +      # call sign
+    r"(?P<callsign>" + startP + ")," +      # call sign
     # class, name{; street; town{, street; town}}
     midP +
     r"(?=" + startP + ",|\Z)",  # end as look-ahead, or end of text "\Z"
@@ -23,23 +25,21 @@ pattern = re.compile(
 
 print("callsign,class,name,addr1,addr2")
 
-matches = re.findall(pattern, text)
-
-for match in matches:
+for match in pattern.finditer(text):
     # print(match)
     # continue
 
     # call sign
-    print(f"{match[0]},", end="")
+    print(f"{match['callsign']},", end="")
 
     # class, name{; street; town{, street; town}}
     # class
-    print(f"{match[2]},", end="")
+    print(f"{match['class']},", end="")
     # name
-    print(f"{match[3].strip()},", end="")
+    print(f"{match['name'].strip()},", end="")
     # addresses
-    if match[4]:
-        addr = match[4].strip(",; ").split(",")
+    if match['addr']:
+        addr = match['addr'].strip(",; ").split(",")
         # street, town
         print(f"{addr[0]}," if addr[0] else "n/a,", end="")
         # street, town
