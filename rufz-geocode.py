@@ -79,8 +79,8 @@ if numSeenRecords == 0:
 #
 
 records = []
-with open('2024-05-01-Amateurfunk-Funkamateure-adresses-not-empty-filtered.csv', 'r') as f:
-    records = f.read().splitlines() 
+with open('2024-05-01-Amateurfunk-Funkamateure-Rufzeichenliste_AFU-CallSigns-Bundesnetzagentur.csv', 'r') as f:
+    records = f.read().splitlines()
 
 locator = Nominatim( user_agent="geocode radio amateur addresses" )
 
@@ -89,11 +89,13 @@ numProcessedRecords=0
 # Start from last position when exited (crash recovery)
 for num in range(numSeenRecords+1, len(records)):
 
+    # callsign,class,name,addr1,addr2
     recs = records[num].split(",")
     
     logger.debug( "#CS: " + recs[0] )
 
-    if recs[3] == "n/a" or recs[4] == "n/a":
+    print(recs)
+    if recs[3] == "n/a" and recs[4] == "n/a":
         logger.debug( f"skip record {num}" )
         # skip record, no addresses
         numSeenRecords += 1
@@ -104,22 +106,22 @@ for num in range(numSeenRecords+1, len(records)):
 
     # split anew addresses only cause ";" separated also class + name
     # from addresses.
-    address = recs[3] + ", " + recs[4]
+    address = recs[4] if recs[4] else recs[3]
 
     retries = 3
     while retries > 0:
         try:
             location = locator.geocode( address, timeout=10 )
-                
+
             if location:
                 record = "{}, {}, {}, {}, {}, {}\n".format(
                     location.longitude, location.latitude,
-                    recs[0], recs[1], recs[2], recs[3]+';'+recs[4] )
+                    recs[0], recs[1], recs[2], address )
                 rufzeichen.write( record )
                 logger.debug( "#CSV-Written: " + record )
 
             retries = 0
-                
+
         except ( GeocoderTimedOut,
                  GeocoderUnavailable,
                  GeocoderServiceError ) as e:
@@ -139,7 +141,7 @@ for num in range(numSeenRecords+1, len(records)):
     rufzeichen.flush()
 
     print( "# seen: " + str(numSeenRecords) )
-    print( "# processed: " + str(numProcessedRecords) )
+    # print( "# processed: " + str(numProcessedRecords) )
 
     if STOP_PROGRAM:
         print("Exiting...")
