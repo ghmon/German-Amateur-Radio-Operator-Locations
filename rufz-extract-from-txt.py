@@ -9,13 +9,17 @@ text = [string if not string.startswith("Seite ") else " " for string in text]
 text = "".join(text)
 text = text.replace(", ", ",").replace("; ", ";")
 
-# call sign
+#### defining regexp pattern
+
+# start and end with call sign
 startP = "D[A-Z0-9]{4,5}"
+
 # class, name{[,;] street; town{, street; town}}
 midP = (r"(?P<class>[AE])[,;]?" +
         "(?P<name>.*?)" +
         "(?P<addr>[,;].*?)?")
 #midP = r"(.*?)"
+
 pattern = re.compile(
     r"(?P<callsign>" + startP + ")," +      # call sign
     # class, name{; street; town{, street; town}}
