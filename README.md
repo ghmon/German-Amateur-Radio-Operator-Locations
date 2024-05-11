@@ -50,7 +50,7 @@ Ugly, i know: change txt file name in file "rufz-geocode.py" (around line 82):
 
 => file = open(\<path <operator-csv-file>\>)
 
-and then start "rufz-geocode.py"
+and then start "rufz-geocode.py".
 
 Output is written to CSV file "rufzeichen-geocoded.csv". It includes
 comma-separated values of longitude, latitude, call sign, amateur
